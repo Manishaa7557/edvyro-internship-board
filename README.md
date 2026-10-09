@@ -34,3 +34,7 @@ https://github.com/Manishaa7557/edvyro-internship-board
 ## Note
 
 The website currently uses sample internship data for demonstration purposes.
+
+## Screenshot
+
+![Internship Board Website](internship-board.png.png)
