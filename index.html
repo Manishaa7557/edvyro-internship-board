@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Board</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Internship Board</h1>
+        <p>Find your next learning opportunity</p>
+    </header>
+
+    <main>
+        <h2>Explore Internships</h2>
+
+        
+<label for="search">Search by internship title or company</label>
+<input
+    type="text"
+    id="search"
+    placeholder="e.g. Frontend Developer"
+>
+
+<label for="domainFilter">Filter by domain</label>
+<select id="domainFilter">
+    <option value="">All Domains</option>
+    <option value="Web Development">Web Development</option>
+    <option value="Data Science">Data Science</option>
+    <option value="UI/UX Design">UI/UX Design</option>
+</select>
+
+<section id="internshipList" aria-live="polite">
+    <p>Internships will appear here.</p>
+</section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
