@@ -84,6 +84,61 @@ app.post("/api/internships", (req, res) => {
   res.status(201).json(item);
 });
 
+app.put("/api/internships/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const { title, company, domain, location } = req.body || {};
+
+  if (!Number.isInteger(id) || id <= 0) {
+    return res.status(400).json({ message: "Invalid internship ID" });
+  }
+
+  if (![title, company, domain, location].every(
+    value => typeof value === "string" && value.trim()
+  )) {
+    return res.status(400).json({
+      message: "Title, company, domain and location are required"
+    });
+  }
+
+  const existing = db.prepare(
+    "SELECT * FROM internships WHERE id = ?"
+  ).get(id);
+
+  if (!existing) {
+    return res.status(404).json({ message: "Internship not found" });
+  }
+
+  db.prepare(`
+    UPDATE internships
+    SET title = ?, company = ?, domain = ?, location = ?
+    WHERE id = ?
+  `).run(title.trim(), company.trim(), domain.trim(), location.trim(), id);
+
+  const updated = db.prepare(
+    "SELECT * FROM internships WHERE id = ?"
+  ).get(id);
+
+  res.json(updated);
+});
+
+app.delete("/api/internships/:id", (req, res) => {
+  const id = Number(req.params.id);
+
+  if (!Number.isInteger(id) || id <= 0) {
+    return res.status(400).json({ message: "Invalid internship ID" });
+  }
+
+  const result = db.prepare(
+    "DELETE FROM internships WHERE id = ?"
+  ).run(id);
+
+  if (result.changes === 0) {
+    return res.status(404).json({ message: "Internship not found" });
+  }
+
+  res.status(200).json({ message: "Internship deleted successfully" });
+});
+
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
